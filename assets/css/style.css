@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "Mokoko";
+  src: url("../fonts/MokokoMd.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Mokoko Bold */
+@font-face {
+  font-family: "Mokoko";
+  src: url("../fonts/MokokoBd.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-mokoko {
+  font-family: "Mokoko", sans-serif;
+}
