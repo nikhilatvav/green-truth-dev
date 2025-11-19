@@ -10,10 +10,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const byId = (id) => document.getElementById(id);
 
   function setActive(activeId) {
-    tabs.forEach((t) => byId(t.content).classList.add("hidden"));
-    tabs.forEach((t) => {
-      const btn = byId(t.id);
-      btn.classList.remove(
+    const activeTab = tabs.find((t) => t.id === activeId);
+    if (!activeTab) return;
+
+    tabs.forEach((tab) => {
+      const content = byId(tab.content);
+      const button = byId(tab.id);
+
+      const isActive = tab.id === activeId;
+      content.classList.toggle("hidden", !isActive);
+
+      button.classList.remove(
         "active-overview",
         "inactive-overview",
         "active-middle",
@@ -21,23 +28,30 @@ document.addEventListener("DOMContentLoaded", () => {
         "active-last",
         "inactive-last"
       );
-      if (t.type === "overview") btn.classList.add("inactive-overview");
-      else if (t.type === "middle") btn.classList.add("inactive-middle");
-      else btn.classList.add("inactive-last");
+
+      let activeClass, inactiveClass;
+      switch (tab.type) {
+        case "overview":
+          activeClass = "active-overview";
+          inactiveClass = "inactive-overview";
+          break;
+        case "middle":
+          activeClass = "active-middle";
+          inactiveClass = "inactive-middle";
+          break;
+        case "last":
+          activeClass = "active-last";
+          inactiveClass = "inactive-last";
+          break;
+      }
+
+      button.classList.add(isActive ? activeClass : inactiveClass);
     });
-    const activeTab = tabs.find((t) => t.id === activeId);
-    const btn = byId(activeTab.id);
-    if (activeTab.type === "overview") {
-      btn.classList.remove("inactive-overview");
-      btn.classList.add("active-overview");
-    } else if (activeTab.type === "middle") {
-      btn.classList.remove("inactive-middle");
-      btn.classList.add("active-middle");
-    } else {
-      btn.classList.remove("inactive-last");
-      btn.classList.add("active-last");
-    }
-    byId(activeTab.content).classList.remove("hidden");
+
+    const overviewTabContainer = byId("overview-tab-container");
+    const isOverviewActive = activeTab.type === "overview";
+    overviewTabContainer.classList.toggle("bg-[#F5F5ED]", isOverviewActive);
+    overviewTabContainer.classList.toggle("bg-white", !isOverviewActive);
   }
 
   tabs.forEach((t) =>
@@ -46,15 +60,25 @@ document.addEventListener("DOMContentLoaded", () => {
   setActive("tab-overview");
 
   // Accordion logic
-  const accordionHeaders = document.querySelectorAll(".accordion-header");
-  accordionHeaders.forEach((header) => {
+  document.querySelectorAll(".accordion-header").forEach((header) => {
     header.addEventListener("click", () => {
-      const accordionItem = header.closest(".accordion-item");
-      if (!accordionItem) return;
-
-      const content = accordionItem.querySelector(".accordion-content");
+      const content = header.nextElementSibling;
       content.classList.toggle("hidden");
       header.classList.toggle("is-open");
     });
+  });
+
+  // Mobile Menu Toggle
+  const mobileMenu = byId("mobile-menu");
+  const menuButton = byId("menu-button");
+  const closeMenuButton = byId("close-menu");
+  const mobileMenuLinks = mobileMenu.querySelectorAll("a");
+
+  const toggleMenu = (show) => mobileMenu.classList.toggle("hidden", !show);
+
+  menuButton?.addEventListener("click", () => toggleMenu(true));
+  closeMenuButton?.addEventListener("click", () => toggleMenu(false));
+  mobileMenuLinks.forEach((link) => {
+    link.addEventListener("click", () => toggleMenu(false));
   });
 });
