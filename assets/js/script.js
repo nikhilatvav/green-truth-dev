@@ -44,4 +44,17 @@ document.addEventListener("DOMContentLoaded", () => {
     byId(t.id).addEventListener("click", () => setActive(t.id))
   );
   setActive("tab-overview");
+
+  // Accordion logic
+  const accordionHeaders = document.querySelectorAll(".accordion-header");
+  accordionHeaders.forEach((header) => {
+    header.addEventListener("click", () => {
+      const accordionItem = header.closest(".accordion-item");
+      if (!accordionItem) return;
+
+      const content = accordionItem.querySelector(".accordion-content");
+      content.classList.toggle("hidden");
+      header.classList.toggle("is-open");
+    });
+  });
 });
