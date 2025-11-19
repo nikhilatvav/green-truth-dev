@@ -47,7 +47,6 @@
   background: #fff;
   color: #333;
   border-bottom: 1px solid #000;
-  border-right: 1px solid transparent;
 }
 .active-middle {
   background: #f5f5ed;
@@ -60,8 +59,6 @@
   background: #fff;
   color: #333;
   border-bottom: 1px solid #000;
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
 }
 .active-last {
   background: #f5f5ed;
@@ -73,7 +70,6 @@
   background: #fff;
   color: #333;
   border-bottom: 1px solid #000;
-  border-left: 1px solid transparent;
 }
 /* Prevent layout shift when borders toggle */
 .tab-btn {
