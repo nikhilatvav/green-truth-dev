@@ -34,7 +34,7 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 1;
-  padding: 0.5rem 2rem;
+  padding: 12px 24px;
   cursor: pointer;
 }
 .active-overview {
@@ -93,4 +93,15 @@
   .accordion-icon {
     display: block;
   }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

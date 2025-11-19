@@ -27,15 +27,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     const activeTab = tabs.find((t) => t.id === activeId);
     const btn = byId(activeTab.id);
+    const overviewTabContainer = byId("overview-tab-container");
+
     if (activeTab.type === "overview") {
       btn.classList.remove("inactive-overview");
       btn.classList.add("active-overview");
+      overviewTabContainer.classList.add("bg-[#F5F5ED]");
+      overviewTabContainer.classList.remove("bg-white");
     } else if (activeTab.type === "middle") {
       btn.classList.remove("inactive-middle");
       btn.classList.add("active-middle");
+      overviewTabContainer.classList.add("bg-white");
+      overviewTabContainer.classList.remove("bg-[#F5F5ED]");
     } else {
       btn.classList.remove("inactive-last");
       btn.classList.add("active-last");
+      overviewTabContainer.classList.add("bg-white");
+      overviewTabContainer.classList.remove("bg-[#F5F5ED]");
     }
     byId(activeTab.content).classList.remove("hidden");
   }
@@ -55,6 +63,31 @@ document.addEventListener("DOMContentLoaded", () => {
       const content = accordionItem.querySelector(".accordion-content");
       content.classList.toggle("hidden");
       header.classList.toggle("is-open");
+    });
+  });
+
+  //menu icon toggle
+
+  const mobileMenu = byId("mobile-menu");
+  const menuButton = byId("menu-button");
+  const closeMenuButton = byId("close-menu");
+  const mobileMenuLinks = mobileMenu.querySelectorAll("a");
+
+  if (menuButton) {
+    menuButton.addEventListener("click", () => {
+      mobileMenu.classList.remove("hidden");
+    });
+  }
+
+  if (closeMenuButton) {
+    closeMenuButton.addEventListener("click", () => {
+      mobileMenu.classList.add("hidden");
+    });
+  }
+
+  mobileMenuLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.add("hidden");
     });
   });
 });
