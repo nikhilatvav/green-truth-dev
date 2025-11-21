@@ -114,3 +114,14 @@
 .inset-shadow-effect {
   box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.7);
 }
+
+@media (min-width: 1024px) {
+  #hexagon-bg-2.mint-active {
+    top: 30%;
+  }
+}
+@media (min-width: 1280px) {
+  #hexagon-bg-1.mint-active {
+    top: 31%;
+  }
+}
