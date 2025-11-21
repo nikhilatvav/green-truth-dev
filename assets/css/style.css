@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Mokoko";
-  src: url("../fonts/MokokoMd.otf") format("opentype");
-  font-weight: 500;
+  src: url("../fonts/MokokoRg.otf") format("opentype");
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -17,6 +17,15 @@
 
 .font-mokoko {
   font-family: "Mokoko", sans-serif;
+}
+
+.font-mokoko-normal {
+  font-family: "Mokoko", sans-serif;
+  font-weight: 400 !important;
+}
+
+.font-inter {
+  font-family: "Inter", sans-serif;
 }
 
 .complex-text {
@@ -104,4 +113,15 @@
 
 .inset-shadow-effect {
   box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.7);
+}
+
+@media (min-width: 1024px) {
+  #hexagon-bg-2.mint-active {
+    top: 30%;
+  }
+}
+@media (min-width: 1280px) {
+  #hexagon-bg-1.mint-active {
+    top: 31%;
+  }
 }

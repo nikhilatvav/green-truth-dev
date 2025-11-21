@@ -81,4 +81,35 @@ document.addEventListener("DOMContentLoaded", () => {
   mobileMenuLinks.forEach((link) => {
     link.addEventListener("click", () => toggleMenu(false));
   });
+
+  /**
+   * Mint tab background position handling.
+   * Adds 'mint-active' to both hexagon background images when Mint tab selected.
+   * Removes it for all other tabs.
+   */
+  const bg1 = document.getElementById("hexagon-bg-1"); // 2xl version
+  const bg2 = document.getElementById("hexagon-bg-2"); // lg–xl version
+  if (!bg1 || !bg2) return;
+
+  const tabMap = [
+    { id: "tab-overview", mint: false },
+    { id: "tab-mint", mint: true },
+    { id: "tab-acquire", mint: false },
+    { id: "tab-discover", mint: false },
+    { id: "tab-integrate", mint: false },
+  ];
+
+  tabMap.forEach((cfg) => {
+    const btn = document.getElementById(cfg.id);
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      if (cfg.mint) {
+        bg1.classList.add("mint-active");
+        bg2.classList.add("mint-active");
+      } else {
+        bg1.classList.remove("mint-active");
+        bg2.classList.remove("mint-active");
+      }
+    });
+  });
 });
