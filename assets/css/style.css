@@ -125,3 +125,32 @@
     top: 31%;
   }
 }
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+header {
+  height: 110px;
+}
+
+#hero-pin-section {
+  padding-top: 110px;
+  overflow: visible;
+}
+
+#hero-pin-inner {
+  width: 100%;
+  min-height: calc(80vh - 110px);
+}
+
+/* Allow paths to render outside SVG box */
+#logo-dots-svg {
+  overflow: visible;
+  z-index: 200;
+  pointer-events: none;
+  will-change: transform;
+}
