@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Disable browser scroll restoration
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  // Force top-of-page on refresh/load
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 0);
+
   const tabs = [
     { id: "tab-overview", content: "content-overview", type: "overview" },
     { id: "tab-mint", content: "content-mint", type: "middle" },
@@ -82,34 +92,157 @@ document.addEventListener("DOMContentLoaded", () => {
     link.addEventListener("click", () => toggleMenu(false));
   });
 
-  /**
-   * Mint tab background position handling.
-   * Adds 'mint-active' to both hexagon background images when Mint tab selected.
-   * Removes it for all other tabs.
-   */
-  const bg1 = document.getElementById("hexagon-bg-1"); // 2xl version
-  const bg2 = document.getElementById("hexagon-bg-2"); // lg–xl version
-  if (!bg1 || !bg2) return;
+  // Scroll Spy & Smooth Scroll
+  const navLinks = document.querySelectorAll(".nav-link");
 
-  const tabMap = [
-    { id: "tab-overview", mint: false },
-    { id: "tab-mint", mint: true },
-    { id: "tab-acquire", mint: false },
-    { id: "tab-discover", mint: false },
-    { id: "tab-integrate", mint: false },
-  ];
-
-  tabMap.forEach((cfg) => {
-    const btn = document.getElementById(cfg.id);
-    if (!btn) return;
-    btn.addEventListener("click", () => {
-      if (cfg.mint) {
-        bg1.classList.add("mint-active");
-        bg2.classList.add("mint-active");
-      } else {
-        bg1.classList.remove("mint-active");
-        bg2.classList.remove("mint-active");
+  // Smooth Scroll using scrollIntoView so scroll-mt works
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute("href")?.substring(1);
+      const targetSection = targetId ? document.getElementById(targetId) : null;
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
   });
+
+  // Scroll Spy Observer
+  const sections = Array.from(navLinks)
+    .map((link) => {
+      const href = link.getAttribute("href");
+      if (!href) return null;
+      const id = href.substring(1);
+      return document.getElementById(id);
+    })
+    .filter((section) => section !== null);
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "-20% 0px -60% 0px",
+    threshold: 0,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute("id");
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${id}`) {
+            link.classList.add("active");
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach((section) => {
+    observer.observe(section);
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const tabsContainer = document.getElementById("proof-tabs-container");
+  const prevBtn = document.getElementById("prev-tab-btn");
+  const nextBtn = document.getElementById("next-tab-btn");
+
+  if (!tabsContainer) return;
+
+  const tabs = Array.from(tabsContainer.querySelectorAll("button"));
+  let currentIndex = 0; // State to track which tab is active
+  let hasInitialized = false; // prevent page scroll on initial render
+
+  // Configuration for class mappings
+  const tabConfigs = [
+    { active: "active-overview", inactive: "inactive-overview" },
+    { active: "active-middle", inactive: "inactive-middle" },
+    { active: "active-middle", inactive: "inactive-middle" },
+    { active: "active-last", inactive: "inactive-last" },
+  ];
+
+  const scrollTabIntoView = (btn) => {
+    // Only adjust the tabs container horizontal scroll, avoid page scrolling
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    if (!isMobile) return;
+    const containerRect = tabsContainer.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    const offsetLeft =
+      btn.offsetLeft - (tabsContainer.clientWidth / 2 - btn.offsetWidth / 2);
+    tabsContainer.scrollTo({
+      left: Math.max(0, offsetLeft),
+      behavior: "smooth",
+    });
+  };
+
+  const updateTabUI = (index, { suppressScroll = false } = {}) => {
+    tabs.forEach((btn, idx) => {
+      const config = tabConfigs[idx];
+      const targetId = `proof-content-${idx + 1}`;
+      const contentPane = document.getElementById(targetId);
+
+      // Reset classes
+      btn.classList.remove(config.active, config.inactive);
+
+      if (idx === index) {
+        // Active
+        btn.classList.add(config.active);
+        if (contentPane) {
+          contentPane.classList.remove("hidden");
+          contentPane.classList.add("block");
+        }
+        // Avoid page jumps on initial load; afterwards scroll only the tabs container
+        if (!suppressScroll) {
+          scrollTabIntoView(btn);
+        }
+      } else {
+        // Inactive
+        btn.classList.add(config.inactive);
+        if (contentPane) {
+          contentPane.classList.add("hidden");
+          contentPane.classList.remove("block");
+        }
+      }
+    });
+  };
+
+  // Main Switch Function
+  const switchTab = (index) => {
+    currentIndex = index;
+    updateTabUI(currentIndex, { suppressScroll: false });
+  };
+
+  // 1. Tab Click Event (Event Delegation)
+  tabsContainer.addEventListener("click", (e) => {
+    const clickedBtn = e.target.closest("button");
+    if (!clickedBtn || !tabsContainer.contains(clickedBtn)) return;
+
+    const newIndex = tabs.indexOf(clickedBtn);
+    if (newIndex !== -1) switchTab(newIndex);
+  });
+
+  // 2. Next Button Click
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      let nextIndex = currentIndex + 1;
+      // Loop back to start if at end
+      if (nextIndex >= tabs.length) nextIndex = 0;
+      switchTab(nextIndex);
+    });
+  }
+
+  // 3. Prev Button Click
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      let prevIndex = currentIndex - 1;
+      // Loop to end if at start
+      if (prevIndex < 0) prevIndex = tabs.length - 1;
+      switchTab(prevIndex);
+    });
+  }
+
+  // Initialize without auto-scrolling the tab or page
+  currentIndex = 0;
+  updateTabUI(currentIndex, { suppressScroll: true });
+  hasInitialized = true;
 });
