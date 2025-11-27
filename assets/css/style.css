@@ -126,31 +126,31 @@
   }
 }
 
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 100;
+/* --- Add to assets/css/style.css --- */
+
+/* Place the SVG on a high z-index so it floats over other elements */
+#hero-floating-dots {
+  position: relative; /* Required for z-index to take effect */
+  z-index: 999;
+  /* Important: allows dots to move far outside their original SVG boundaries */
+  overflow: visible;
+  pointer-events: none; /* Prevents dots from blocking clicks */
 }
 
-header {
-  height: 110px;
+/* Ensure the group inside the SVG can be animated to full opacity */
+#hero-floating-dots g {
+  transform-origin: center center;
 }
 
+/* FIX: Ensure the hero section sits visually above the following sections 
+   so the dots (which overflow out of it) are not covered by the next section's background. */
 #hero-pin-section {
-  padding-top: 110px;
-  overflow: visible;
+  position: relative;
+  z-index: 20;
 }
 
-#hero-pin-inner {
-  width: 100%;
-  min-height: calc(80vh - 110px);
-}
-
-/* Allow paths to render outside SVG box */
-#logo-dots-svg {
-  overflow: visible;
-  z-index: 200;
-  pointer-events: none;
-  will-change: transform;
+/* Ensure mandate section is lower than hero so dots float over it */
+#mandate-section {
+  position: relative;
+  z-index: 10;
 }
