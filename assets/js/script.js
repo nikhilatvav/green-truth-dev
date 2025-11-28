@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     history.scrollRestoration = "manual";
   }
 
-  // Force top-of-page on refresh/load
+  // top-of-page on refresh/load
   setTimeout(() => {
     window.scrollTo(0, 0);
   }, 0);
@@ -62,6 +62,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const isOverviewActive = activeTab.type === "overview";
     overviewTabContainer.classList.toggle("bg-[#F5F5ED]", isOverviewActive);
     overviewTabContainer.classList.toggle("bg-white", !isOverviewActive);
+
+    // Mint & Acquire tab background position handling
+    const bg1 = byId("hexagon-bg-1"); // 2xl version
+    const bg2 = byId("hexagon-bg-2"); // lg–xl version
+    if (bg1 && bg2) {
+      const isMint = activeTab.id === "tab-mint";
+      const isAcquire = activeTab.id === "tab-acquire";
+      bg1.classList.toggle("mint-active", isMint);
+      bg2.classList.toggle("mint-active", isMint);
+      bg1.classList.toggle("acquire-active", isAcquire);
+      bg2.classList.toggle("acquire-active", isAcquire);
+    }
   }
 
   tabs.forEach((t) =>

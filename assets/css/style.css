@@ -112,30 +112,52 @@
 }
 
 .inset-shadow-effect {
-  box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.7);
+  box-shadow: inset 10px 20px 40px 0 rgba(0, 0, 0, 0.7);
 }
 
+/* Mint tab positions */
 @media (min-width: 1024px) {
   #hexagon-bg-2.mint-active {
     top: 30%;
   }
 }
+/* Update Mint for 1280px */
 @media (min-width: 1280px) {
   #hexagon-bg-1.mint-active {
-    top: 31%;
+    top: 29%;
+  }
+}
+
+/* Acquire tab positions (same shift as Mint by default) */
+@media (min-width: 1024px) {
+  #hexagon-bg-2.acquire-active {
+    top: 41%;
+  }
+}
+@media (min-width: 1280px) {
+  #hexagon-bg-1.acquire-active {
+    top: 39%;
   }
 }
 
 .tooltip-arrow {
   position: absolute;
+  z-index: 0;
   bottom: -10px;
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
   width: 80px;
   height: 80px;
   background-color: #142d21;
-  z-index: -1;
   border-radius: 2px;
+}
+
+@media (min-width: 1280px) {
+  .tooltip-arrow {
+    bottom: -40px;
+    width: 100px;
+    height: 100px;
+  }
 }
 
 /* Default link styles */
@@ -213,7 +235,6 @@
 /* --- TAB 1: OVERVIEW Logic --- */
 /* Active: Top/Right borders Black. Bottom Transparent. */
 #proof-tabs-container .tab-btn.active-overview {
-  color: #e66547;
   border-top: 1px solid #000;
   border-right: 1px solid #000;
   border-left: 1px solid transparent;
@@ -223,8 +244,7 @@
 
 /* Inactive: Bottom border Black. */
 #proof-tabs-container .tab-btn.inactive-overview {
-  background-color: #fff;
-  color: #333;
+  background-color: transparent;
   border-top: 1px solid transparent;
   border-right: 1px solid transparent;
   border-left: 1px solid transparent;
@@ -234,7 +254,6 @@
 /* --- TAB 2 & 3: MIDDLE Logic --- */
 /* Active: Top/Left/Right borders Black. Bottom Transparent. */
 #proof-tabs-container .tab-btn.active-middle {
-  color: #e66547;
   border-top: 1px solid #000;
   border-left: 1px solid #000;
   border-right: 1px solid #000;
@@ -244,8 +263,7 @@
 
 /* Inactive: Bottom border Black. */
 #proof-tabs-container .tab-btn.inactive-middle {
-  background-color: #fff;
-  color: #333;
+  background-color: transparent;
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
   border-right: 1px solid transparent;
@@ -255,7 +273,6 @@
 /* --- TAB 4: LAST Logic --- */
 /* Active: Top/Left borders Black. Bottom Transparent. */
 #proof-tabs-container .tab-btn.active-last {
-  color: #e66547;
   border-top: 1px solid #000;
   border-left: 1px solid #000;
   border-right: 1px solid transparent;
@@ -265,8 +282,7 @@
 
 /* Inactive: Bottom border Black. */
 #proof-tabs-container .tab-btn.inactive-last {
-  background-color: #fff;
-  color: #333;
+  background-color: transparent;
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
   border-right: 1px solid transparent;
