@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Terms of Use - Greentruth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "brand-green": "#378457",
+              "brand-red": "#E66547",
+              "brand-dark": "#333",
+            },
+            maxWidth: {
+              content: "1280px",
+            },
+            fontFamily: {
+              mokoko: ["Mokoko", "sans-serif"],
+              inter: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="m-0 font-mokoko text-brand-dark bg-white flex flex-col min-h-screen"
+  >
+    <!-- Header -->
+    <header class="bg-white px-5 md:px-0 shadow-sm relative z-30">
+      <div
+        class="flex justify-between items-center md:items-end py-[25px] md:px-10 lg:px-[100px] max-w-content mx-auto relative"
+      >
+        <a href="/" class="hidden md:block">
+          <img
+            src="assets/images/logo.svg"
+            alt="Greentruth logo"
+            class="navbar__logo mb-3"
+          />
+        </a>
+        <a href="/" class="block md:hidden">
+          <img
+            src="assets/icons/logo-mobile.svg"
+            alt="Greentruth logo"
+            class="navbar__logo-mobile mb-3"
+          />
+        </a>
+        <nav class="hidden md:block lg:pr-[20px] self-end">
+          <ul class="flex gap-[20px] lg:gap-[30px] list-none md:pb-5 m-0">
+            <li>
+              <a
+                href="index.html#solutions"
+                class="text-sm text-[#142D21] opacity-80 hover:opacity-100 transition-opacity"
+                >Solutions</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#platform"
+                class="text-sm text-[#142D21] opacity-80 hover:opacity-100 transition-opacity"
+                >Platform</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#resources"
+                class="text-sm text-[#142D21] opacity-80 hover:opacity-100 transition-opacity"
+                >Resources</a
+              >
+            </li>
+            <li>
+              <a
+                href="index.html#about"
+                class="text-sm text-[#142D21] opacity-80 hover:opacity-100 transition-opacity"
+                >About</a
+              >
+            </li>
+            <li>
+              <a
+                href="contact.html"
+                class="text-sm text-[#142D21] opacity-80 hover:opacity-100 transition-opacity"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div
+          class="flex items-center md:items-start md:self-start gap-5 md:gap-8 md:absolute md:right-[clamp(1.25rem,9vw,4%)] md:top-[13%] lg:right-[clamp(1.25rem,10vw,10%)] xl:right-0 xl:relative"
+        >
+          <a
+            href="index.html#get-started"
+            class="text-sm font-medium text-brand-red whitespace-nowrap hover:opacity-80 transition-opacity"
+            >Get Started</a
+          >
+          <a
+            href="index.html#login"
+            class="text-sm font-medium text-brand-red whitespace-nowrap hover:opacity-80 transition-opacity"
+            >Login</a
+          >
+          <button
+            id="menu-button"
+            class="md:hidden border-0 bg-transparent text-2xl cursor-pointer text-brand-dark p-0 ml-0"
+            aria-label="Toggle navigation"
+          >
+            <img src="assets/icons/menu-icon.svg" alt="Menu Icon" />
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Menu Modal -->
+    <div
+      id="mobile-menu"
+      class="hidden fixed inset-0 bg-white z-50 p-5 animate-fade-in"
+    >
+      <div class="flex justify-end">
+        <button
+          id="close-menu"
+          class="border-0 bg-transparent text-4xl cursor-pointer text-brand-dark"
+        >
+          &times;
+        </button>
+      </div>
+      <nav class="h-full flex items-center justify-center -mt-12">
+        <ul class="flex flex-col gap-8 list-none p-0 m-0 text-center">
+          <li>
+            <a
+              href="index.html#solutions"
+              class="text-2xl text-brand-dark opacity-80 hover:opacity-100 transition-opacity"
+              >Solutions</a
+            >
+          </li>
+          <li>
+            <a
+              href="index.html#platform"
+              class="text-2xl text-brand-dark opacity-80 hover:opacity-100 transition-opacity"
+              >Platform</a
+            >
+          </li>
+          <li>
+            <a
+              href="index.html#resources"
+              class="text-2xl text-brand-dark opacity-80 hover:opacity-100 transition-opacity"
+              >Resources</a
+            >
+          </li>
+          <li>
+            <a
+              href="index.html#about"
+              class="text-2xl text-brand-dark opacity-80 hover:opacity-100 transition-opacity"
+              >About</a
+            >
+          </li>
+          <li>
+            <a
+              href="contact.html"
+              class="text-2xl text-brand-dark opacity-80 hover:opacity-100 transition-opacity"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Main -->
+    <main class="flex-grow bg-[#F5F5ED] relative overflow-hidden">
+      <div
+        class="absolute top-0 right-0 w-full h-full pointer-events-none opacity-10 z-0"
+      >
+        <img
+          src="assets/images/greentruth-hexagon-bg.svg"
+          alt=""
+          class="absolute top-[-10%] right-[-10%] w-[80%] max-w-[800px]"
+        />
+      </div>
+
+      <section
+        class="pt-[60px] pb-[100px] px-5 md:px-10 lg:px-[100px] max-w-content mx-auto relative z-10"
+      >
+        <header class="mb-8 md:mb-12">
+          <h1
+            class="text-[22px] md:text-[30px] leading-tight font-normal font-mokoko text-brand-dark"
+          >
+            Terms of <span class="text-brand-red">Use</span>
+          </h1>
+        </header>
+
+        <div
+          class="bg-white p-6 md:p-10 shadow-lg rounded-sm border-t-4 border-brand-green font-inter space-y-8"
+        >
+          <section>
+            <h2
+              class="text-[16px] font-bold uppercase tracking-wider text-brand-green mb-2"
+            >
+              Agreement
+            </h2>
+            <p class="text-[16px] leading-relaxed">
+              These placeholder terms govern your use of Greentruth services.
+              Replace this with your final, approved legal content.
+            </p>
+          </section>
+
+          <section>
+            <h2
+              class="text-[16px] font-bold uppercase tracking-wider text-brand-green mb-2"
+            >
+              Acceptable Use
+            </h2>
+            <ul class="list-disc pl-6 space-y-2 text-[16px] leading-relaxed">
+              <li>Use services in compliance with applicable laws</li>
+              <li>Do not attempt to disrupt or compromise the service</li>
+              <li>Respect intellectual property rights</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2
+              class="text-[16px] font-bold uppercase tracking-wider text-brand-green mb-2"
+            >
+              Disclaimers
+            </h2>
+            <p class="text-[16px] leading-relaxed">
+              Services are provided “as is” to the extent permitted by law. This
+              is placeholder language.
+            </p>
+          </section>
+
+          <section>
+            <h2
+              class="text-[16px] font-bold uppercase tracking-wider text-brand-green mb-2"
+            >
+              Contact
+            </h2>
+            <p class="text-[16px] leading-relaxed">
+              Questions? Email
+              <a
+                href="mailto:legal@greentruth.io"
+                class="text-brand-red underline"
+                >legal@greentruth.io</a
+              >.
+            </p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-black h-[73px] px-5 md:px-10 lg:px-[100px]">
+      <div
+        class="max-w-[1440px] h-full mx-auto flex items-center justify-between"
+      >
+        <p class="text-16 leading-5 font-semibold text-white">
+          © Earn DLT 2025
+        </p>
+        <nav class="flex items-center gap-4">
+          <a
+            href="privacy.html"
+            class="text-white text-sm hover:text-brand-red transition-colors"
+            >Privacy</a
+          >
+          <span class="text-white/30">|</span>
+          <a
+            href="terms-of-use.html"
+            class="text-white text-sm hover:text-brand-red transition-colors"
+            >Terms of Use</a
+          >
+        </nav>
+      </div>
+    </footer>
+    <script src="assets/js/script.js" defer></script>
+  </body>
+</html>
