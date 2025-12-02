@@ -339,14 +339,14 @@
 
               <form
                 id="contact-form"
-                action="#form-success"
-                method="GET"
+                action="https://formspree.io/f/mgvgylel"
+                method="POST"
                 class="space-y-6 font-inter"
               >
                 <!-- Honeypot anti-spam -->
                 <input
                   type="text"
-                  name="website"
+                  name="_gotcha"
                   tabindex="-1"
                   autocomplete="off"
                   class="hidden"
@@ -512,26 +512,64 @@
     </main>
     <footer class="bg-black h-[73px] px-5 md:px-10 lg:px-[100px]">
       <div
-        class="max-w-[1440px] h-full mx-auto flex items-center justify-between"
+        class="max-w-[1440px] flex-col sm:flex-row h-full mx-auto flex items-center justify-center sm:justify-between gap-2"
       >
-        <p class="text-16 leading-5 font-semibold text-white">
+        <p class="text-[12px] leading-5 font-semibold text-white">
           © Earn DLT 2025
         </p>
         <nav class="flex items-center gap-4">
           <a
             href="privacy.html"
-            class="text-white text-sm hover:text-brand-red transition-colors"
+            class="text-white text-[12px] hover:text-brand-red transition-colors"
             >Privacy</a
           >
           <span class="text-white/30">|</span>
           <a
             href="terms-of-use.html"
-            class="text-white text-sm hover:text-brand-red transition-colors"
+            class="text-white text-[12px] hover:text-brand-red transition-colors"
             >Terms of Use</a
           >
         </nav>
       </div>
     </footer>
     <script src="assets/js/script.js" defer></script>
+    <script>
+      const form = document.getElementById("contact-form");
+
+      async function handleSubmit(event) {
+        event.preventDefault(); // Prevents the browser from navigating away
+        const data = new FormData(event.target);
+
+        fetch(event.target.action, {
+          method: form.method,
+          body: data,
+          headers: {
+            Accept: "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              // Success: Change URL hash to trigger your CSS success message
+              window.location.hash = "#form-success";
+              form.reset(); // Clear the form fields
+            } else {
+              // Error handling
+              response.json().then((data) => {
+                if (Object.hasOwn(data, "errors")) {
+                  alert(
+                    data["errors"].map((error) => error["message"]).join(", ")
+                  );
+                } else {
+                  alert("Oops! There was a problem submitting your form");
+                }
+              });
+            }
+          })
+          .catch((error) => {
+            alert("Oops! There was a problem submitting your form");
+          });
+      }
+      form.addEventListener("submit", handleSubmit);
+    </script>
   </body>
 </html>
