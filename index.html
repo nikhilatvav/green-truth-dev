@@ -21,6 +21,8 @@
         },
       };
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
     <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -174,7 +176,7 @@
       id="hero-section"
       class="min-h-[80vh] xl:min-h-[86vh] flex items-center justify-center px-5 md:px-10 lg:px-[100px] max-w-content mx-auto relative bg-white mb-20 md:mb-40 scroll-mt-[210px]"
     >
-      <div
+      <div id="hero-pin-inner"
         class="flex flex-col md:flex-row w-full justify-between items-center relative z-10"
       >
         <div class="max-w-[880px] pt-5 md:pt-0">
@@ -243,6 +245,7 @@
         class="absolute bottom-[-52%] md:bottom-[-30%] 2xl:bottom-[-13%] left-0 2xl:left-[-5%] pointer-events-none"
       >
         <svg
+          id="hero-floating-dots"
           class="w-[260px] md:w-[540px]"
           height="735"
           viewBox="0 0 608 735"
@@ -436,7 +439,7 @@
     </section>
 
     <!-- Mandates Section -->
-    <section
+    <section id="mandate-section"
       class="flex flex-col md:flex-row gap-6 md:gap-10 max-w-content mx-auto px-5 pt-[50px] md:pt-[40px] xl:pt-[60px] pb-[100px] md:pb-[160px] md:px-10 lg:px-[100px] items-stretch md:items-start justify-center bg-white"
     >
       <div class="flex-1 md:max-w-[500px]">
@@ -539,14 +542,14 @@
           </div>
         </div>
       </div>
-      <div
-        class="flex-1 md:max-w-[500px] flex items-start justify-center pt-[40px] md:pt-0"
+      <div id="mandate-target"
+        class="flex-1 md:max-w-[500px] min-h-[300px] md:min-h-[500px] flex items-start justify-center pt-[40px] md:pt-0"
       >
-        <img
+        <!-- <img
           src="assets/images/mandate-section-image.svg"
           alt="Mandates illustration"
           class="w-full h-auto block"
-        />
+        /> -->
       </div>
     </section>
 
@@ -2358,5 +2361,6 @@
       </div>
     </footer>
     <script src="assets/js/script.js" defer></script>
+    <script src="assets/js/animations.js" defer></script>
   </body>
 </html>
