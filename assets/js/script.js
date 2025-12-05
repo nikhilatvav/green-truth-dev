@@ -60,11 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const overviewTabContainer = byId("overview-tab-container");
     const isOverviewActive = activeTab.type === "overview";
-    // Guard: only toggle classes if the container exists on this page
-    if (overviewTabContainer) {
-      overviewTabContainer.classList.toggle("bg-[#F5F5ED]", isOverviewActive);
-      overviewTabContainer.classList.toggle("bg-white", !isOverviewActive);
-    }
+    overviewTabContainer.classList.toggle("bg-[#F5F5ED]", isOverviewActive);
+    overviewTabContainer.classList.toggle("bg-white", !isOverviewActive);
 
     // Mint & Acquire tab background position handling
     const bg1 = byId("hexagon-bg-1"); // 2xl version
@@ -79,14 +76,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Guard: only initialize tabs if all required elements exist on this page
-  const hasAllTabs = tabs.every((t) => byId(t.id) && byId(t.content));
-  if (hasAllTabs) {
-    tabs.forEach((t) =>
-      byId(t.id)?.addEventListener("click", () => setActive(t.id))
-    );
-    setActive("tab-overview");
-  }
+  tabs.forEach((t) =>
+    byId(t.id).addEventListener("click", () => setActive(t.id))
+  );
+  setActive("tab-overview");
 
   // Accordion logic
   document.querySelectorAll(".accordion-header").forEach((header) => {
@@ -101,35 +94,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileMenu = byId("mobile-menu");
   const menuButton = byId("menu-button");
   const closeMenuButton = byId("close-menu");
-  // Guard menu existence before querying links
-  const mobileMenuLinks = mobileMenu ? mobileMenu.querySelectorAll("a") : [];
+  const mobileMenuLinks = mobileMenu.querySelectorAll("a");
 
-  // Safer toggle: no-op if menu not present; also manage body scroll and ARIA
-  const toggleMenu = (show) => {
-    if (!mobileMenu) return;
-    mobileMenu.classList.toggle("hidden", !show);
-    document.body.classList.toggle("overflow-hidden", show);
-    menuButton?.setAttribute("aria-expanded", show ? "true" : "false");
-  };
+  const toggleMenu = (show) => mobileMenu.classList.toggle("hidden", !show);
 
-  // Progressive enhancement for accessibility
-  menuButton?.setAttribute("aria-controls", "mobile-menu");
-  menuButton?.setAttribute("aria-expanded", "false");
-
-  menuButton?.addEventListener("click", (e) => {
-    e.preventDefault();
-    toggleMenu(true);
-  });
-  closeMenuButton?.addEventListener("click", (e) => {
-    e.preventDefault();
-    toggleMenu(false);
-  });
+  menuButton?.addEventListener("click", () => toggleMenu(true));
+  closeMenuButton?.addEventListener("click", () => toggleMenu(false));
   mobileMenuLinks.forEach((link) => {
     link.addEventListener("click", () => toggleMenu(false));
-  });
-  // Click outside (backdrop) to close
-  mobileMenu?.addEventListener("click", (e) => {
-    if (e.target === mobileMenu) toggleMenu(false);
   });
 
   // Scroll Spy & Smooth Scroll

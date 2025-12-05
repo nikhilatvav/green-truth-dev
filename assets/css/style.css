@@ -36,6 +36,23 @@
   color: #333;
 }
 
+/* added by Ru */
+.bg-offwhite{
+  background-color: #fdfdfb;
+} 
+
+.bg-darkgreen {
+  background-color: #01140B;
+}
+
+.bg-offblack {
+  background-color: #1A1A1A;
+}
+
+.footer-text{
+  color: #808080;
+}
+
 /* keep only small local rules here; font-face moved to assets/css/fonts.css */
 
 /* Tab states */
