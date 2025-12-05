@@ -21,6 +21,8 @@
         },
       };
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
     <link rel="stylesheet" href="assets/css/style.css" />
 
@@ -174,7 +176,7 @@
       id="hero-section"
       class="min-h-[80vh] xl:min-h-[86vh] flex items-center justify-center px-5 md:px-10 lg:px-[100px] max-w-content mx-auto relative bg-white mb-20 md:mb-40 scroll-mt-[210px]"
     >
-      <div
+      <div id="hero-pin-inner"
         class="flex flex-col md:flex-row w-full justify-between items-center relative z-10"
       >
         <div class="max-w-[880px] pt-5 md:pt-0">
@@ -243,6 +245,7 @@
         class="absolute bottom-[-52%] md:bottom-[-30%] 2xl:bottom-[-13%] left-0 2xl:left-[-5%] pointer-events-none"
       >
         <svg
+          id="hero-floating-dots"
           class="w-[260px] md:w-[540px]"
           height="735"
           viewBox="0 0 608 735"
@@ -436,7 +439,7 @@
     </section>
 
     <!-- Mandates Section -->
-    <section
+    <section id="mandate-section"
       class="flex flex-col md:flex-row gap-6 md:gap-10 max-w-content mx-auto px-5 pt-[50px] md:pt-[40px] xl:pt-[60px] pb-[100px] md:pb-[160px] md:px-10 lg:px-[100px] items-stretch md:items-start justify-center bg-white"
     >
       <div class="flex-1 md:max-w-[500px]">
@@ -539,36 +542,36 @@
           </div>
         </div>
       </div>
-      <div
-        class="flex-1 md:max-w-[500px] flex items-start justify-center pt-[40px] md:pt-0"
+      <div id="mandate-target"
+        class="flex-1 md:max-w-[500px] min-h-[300px] md:min-h-[500px] flex items-start justify-center pt-[40px] md:pt-0"
       >
-        <img
+        <!-- <img
           src="assets/images/mandate-section-image.svg"
           alt="Mandates illustration"
           class="w-full h-auto block"
-        />
+        /> -->
       </div>
     </section>
 
     <!-- Compliance Circle Section -->
     <section
       id="compliance-section"
-      class="flex flex-col items-center justify-center pt-[50px] md:pt-0 pb-[100px] xl:pb-[50px] min-h-[80vh] bg-white scroll-mt-10"
+      class="flex flex-col items-center justify-center pt-[50px] md:pt-0 pb-[100px] xl:pb-[50px] min-h-[100vh] bg-white scroll-mt-10"
     >
       <div
         class="relative flex items-center justify-center w-full min-h-[600px] md:min-h-[700px] overflow-hidden"
       >
-        <div
-          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#142D21] rounded-full inset-shadow-effect flex flex-col items-center justify-center w-[600px] h-[600px] md:w-[680px] md:h-[680px] mx-auto"
+        <div  id="compliance-circle-target"
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full  flex flex-col items-center justify-center w-[600px] h-[600px] md:w-[680px] md:h-[680px] mx-auto"
         >
-          <div
+          <div id="compliance-content-wrapper"
             class="px-5 py-7 sm:px-10 sm:py-10 md:px-16 md:py-16 flex flex-col items-start justify-center w-full max-w-[60%] sm:max-w-[64%]"
           >
-            <h3 class="text-brand-red text-lg md:text-xl font-medium mb-6">
+            <h3 id="compliance-heading" class="text-lg md:text-xl font-medium mb-6 text-brand-red">
               Compliance Greenlighted
             </h3>
             <ul class="mb-7 space-y-4 w-full font-inter">
-              <li class="flex items-start">
+              <li id="compliance-li-1" class="flex items-start">
                 <span
                   class="w-4 h-4 rounded-full mr-3 mt-1 min-w-4 bg-[#e66547] flex-shrink-0"
                 ></span>
@@ -578,7 +581,7 @@
                   natural-gas consumption</span
                 >
               </li>
-              <li class="flex items-start">
+              <li id="compliance-li-2" class="flex items-start">
                 <span
                   class="w-4 h-4 rounded-full mr-3 mt-1 min-w-4 bg-[#ffc42e] flex-shrink-0"
                 ></span>
@@ -587,7 +590,7 @@
                   >Retire & report it</span
                 >
               </li>
-              <li class="flex items-start">
+              <li id="compliance-li-3" class="flex items-start">
                 <span
                   class="w-4 h-4 rounded-full mr-3 mt-1 min-w-4 bg-[#3fc977] flex-shrink-0"
                 ></span>
@@ -598,7 +601,7 @@
               </li>
             </ul>
 
-            <div class="mb-2 font-inter">
+            <div id="compliance-text-1" class="mb-2text-[#C5F2EE] font-inter">
               <p class="text-white text-sm font-normal leading-snug mb-2">
                 Greentruth—one simple system for Scope 3 visibility,<br
                   class="hidden sm:inline"
@@ -606,7 +609,7 @@
                 from source to statement.
               </p>
             </div>
-            <div class="mb-2 text-[#C5F2EE] font-inter">
+            <div id="compliance-text-2" class="mb-2 text-[#C5F2EE] font-inter">
               <p class="font-medium text-sm mb-1">Immediate Relief</p>
               <p class="text-xs font-normal leading-snug mb-2">
                 Verified systems like GreenTruth may qualify your organization
@@ -614,7 +617,7 @@
               </p>
             </div>
             <div class="flex justify-end w-full">
-              <a
+              <a id="compliance-link"
                 href="#"
                 class="text-[#EDA51C] text-xs underline hover:no-underline"
                 >Learn more about temporary relief &rarr;</a
@@ -2358,5 +2361,6 @@
       </div>
     </footer>
     <script src="assets/js/script.js" defer></script>
+    <script src="assets/js/animations.js" defer></script>
   </body>
 </html>
