@@ -339,14 +339,14 @@
 
               <form
                 id="contact-form"
-                action="#form-success"
-                method="GET"
+                action="https://formspree.io/f/mgvgylel"
+                method="POST"
                 class="space-y-6 font-inter"
               >
                 <!-- Honeypot anti-spam -->
                 <input
                   type="text"
-                  name="website"
+                  name="_gotcha"
                   tabindex="-1"
                   autocomplete="off"
                   class="hidden"
@@ -533,5 +533,43 @@
       </div>
     </footer>
     <script src="assets/js/script.js" defer></script>
+    <script>
+      const form = document.getElementById("contact-form");
+
+      async function handleSubmit(event) {
+        event.preventDefault(); // Prevents the browser from navigating away
+        const data = new FormData(event.target);
+
+        fetch(event.target.action, {
+          method: form.method,
+          body: data,
+          headers: {
+            Accept: "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              // Success: Change URL hash to trigger your CSS success message
+              window.location.hash = "#form-success";
+              form.reset(); // Clear the form fields
+            } else {
+              // Error handling
+              response.json().then((data) => {
+                if (Object.hasOwn(data, "errors")) {
+                  alert(
+                    data["errors"].map((error) => error["message"]).join(", ")
+                  );
+                } else {
+                  alert("Oops! There was a problem submitting your form");
+                }
+              });
+            }
+          })
+          .catch((error) => {
+            alert("Oops! There was a problem submitting your form");
+          });
+      }
+      form.addEventListener("submit", handleSubmit);
+    </script>
   </body>
 </html>
