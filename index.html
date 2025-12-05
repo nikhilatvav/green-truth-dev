@@ -556,22 +556,22 @@
     <!-- Compliance Circle Section -->
     <section
       id="compliance-section"
-      class="flex flex-col items-center justify-center pt-[50px] md:pt-0 pb-[100px] xl:pb-[50px] min-h-[80vh] bg-white scroll-mt-10"
+      class="flex flex-col items-center justify-center pt-[50px] md:pt-0 pb-[100px] xl:pb-[50px] min-h-[100vh] bg-white scroll-mt-10"
     >
       <div
         class="relative flex items-center justify-center w-full min-h-[600px] md:min-h-[700px] overflow-hidden"
       >
-        <div
-          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#142D21] rounded-full inset-shadow-effect flex flex-col items-center justify-center w-[600px] h-[600px] md:w-[680px] md:h-[680px] mx-auto"
+        <div  id="compliance-circle-target"
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full  flex flex-col items-center justify-center w-[600px] h-[600px] md:w-[680px] md:h-[680px] mx-auto"
         >
-          <div
+          <div id="compliance-content-wrapper"
             class="px-5 py-7 sm:px-10 sm:py-10 md:px-16 md:py-16 flex flex-col items-start justify-center w-full max-w-[60%] sm:max-w-[64%]"
           >
-            <h3 class="text-brand-red text-lg md:text-xl font-medium mb-6">
+            <h3 id="compliance-heading" class="text-lg md:text-xl font-medium mb-6 text-brand-red">
               Compliance Greenlighted
             </h3>
             <ul class="mb-7 space-y-4 w-full font-inter">
-              <li class="flex items-start">
+              <li id="compliance-li-1" class="flex items-start">
                 <span
                   class="w-4 h-4 rounded-full mr-3 mt-1 min-w-4 bg-[#e66547] flex-shrink-0"
                 ></span>
@@ -581,7 +581,7 @@
                   natural-gas consumption</span
                 >
               </li>
-              <li class="flex items-start">
+              <li id="compliance-li-2" class="flex items-start">
                 <span
                   class="w-4 h-4 rounded-full mr-3 mt-1 min-w-4 bg-[#ffc42e] flex-shrink-0"
                 ></span>
@@ -590,7 +590,7 @@
                   >Retire & report it</span
                 >
               </li>
-              <li class="flex items-start">
+              <li id="compliance-li-3" class="flex items-start">
                 <span
                   class="w-4 h-4 rounded-full mr-3 mt-1 min-w-4 bg-[#3fc977] flex-shrink-0"
                 ></span>
@@ -601,7 +601,7 @@
               </li>
             </ul>
 
-            <div class="mb-2 font-inter">
+            <div id="compliance-text-1" class="mb-2text-[#C5F2EE] font-inter">
               <p class="text-white text-sm font-normal leading-snug mb-2">
                 Greentruth—one simple system for Scope 3 visibility,<br
                   class="hidden sm:inline"
@@ -609,7 +609,7 @@
                 from source to statement.
               </p>
             </div>
-            <div class="mb-2 text-[#C5F2EE] font-inter">
+            <div id="compliance-text-2" class="mb-2 text-[#C5F2EE] font-inter">
               <p class="font-medium text-sm mb-1">Immediate Relief</p>
               <p class="text-xs font-normal leading-snug mb-2">
                 Verified systems like GreenTruth may qualify your organization
@@ -617,7 +617,7 @@
               </p>
             </div>
             <div class="flex justify-end w-full">
-              <a
+              <a id="compliance-link"
                 href="#"
                 class="text-[#EDA51C] text-xs underline hover:no-underline"
                 >Learn more about temporary relief &rarr;</a

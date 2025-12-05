@@ -47,8 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const sourceSvg = document.querySelector("#hero-floating-dots");
   const sourceGroup = sourceSvg.querySelector("g");
   const sourcePaths = sourceSvg.querySelectorAll("path");
-  const fixedContainer = document.querySelector("#hero-section > .absolute");
   const targetContainer = document.querySelector("#mandate-target");
+  const complianceCircle = document.querySelector("#compliance-circle-target");
+  const globalCenterX = window.innerWidth / 2;
+  const globalCenterY = window.innerHeight / 2;
 
   // Data Calculations
   let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
@@ -68,25 +70,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const isMobile = window.innerWidth < 768;
 
-    // Reset all dots to their original state before re-animating
+    // Reset initial state
     gsap.set(sourcePaths, {
       x: 0,
       y: 0,
       scale: 1,
       clearProps: "transform"
     });
+    
+    // Hide content initially
+    gsap.set([
+      "#compliance-heading",
+      "#compliance-li-1",
+      "#compliance-li-2",
+      "#compliance-li-3",
+      "#compliance-text-1",
+      "#compliance-text-2",
+      "#compliance-link"
+    ], { opacity: 0, y: 30 });
 
-    // Reset container position
-    if (fixedContainer) {
-      gsap.set(fixedContainer, {
-        top: isMobile ? "10%" : "auto",
-        left: isMobile ? "-10%" : "auto",
-        y: 0,
-        clearProps: isMobile ? "" : "top,left"
-      });
-    }
-
-    // 1. PIN SETUP
+    // ======================================
+    // PHASE 1: HERO -> MANDATE
+    // ======================================
     const pinTrigger = ScrollTrigger.create({
       trigger: "#mandate-section",
       start: isMobile ? "bottom bottom" : "center center+=50",
@@ -96,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
       scrub: isMobile ? 1 : 2
     });
 
-    // 2. MOVEMENT SETUP
     const moveTl = gsap.timeline({
       scrollTrigger: {
         trigger: "body",
@@ -109,75 +113,162 @@ document.addEventListener("DOMContentLoaded", () => {
 
     moveTl.to(sourceGroup, { opacity: 1, duration: 0.1 }, 0);
 
-    // Mobile: Animate container position from offset to centered
-    if (isMobile && fixedContainer) {
-      moveTl.fromTo(
-        fixedContainer, 
-        { top: "15%", left: "-15%" },  // Start further away for smoother entry
-        { top: "15%", left: "-9%", ease: "power1.inOut", duration: 1 },  // End slightly offset with easing
-        0
-      );
-    }
-
-    // 3. TARGET CALCULATION
+    // Calculate Mandate Targets
     const mandateSection = document.querySelector("#mandate-section");
     const mandateSectionRect = mandateSection.getBoundingClientRect();
     const targetRect = targetContainer.getBoundingClientRect();
     
-    const destCenterX = isMobile 
-      ? window.innerWidth / 2 
-      : targetRect.left + (targetRect.width / 2);
-    
-    const targetOffsetFromBottom = isMobile 
-      ? mandateSectionRect.bottom - targetRect.bottom
-      : 0;
-      
-    const destCenterY = isMobile
-      ? window.innerHeight - targetOffsetFromBottom - (targetRect.height / 2)
-      : targetRect.top + (targetRect.height / 2);
-    
-    const scaleFactor = isMobile ? 0.35 : 0.85;  // Changed from 0.45 to 0.35 for smaller dots
+    // Mandate Center Coordinates
+    let mandateCenterX, mandateCenterY;
 
+    if (isMobile) {
+       mandateCenterX = window.innerWidth / 2;
+       const mandateOffsetFromBottom = mandateSectionRect.bottom - targetRect.bottom;
+       const targetCenterFromBottom = mandateOffsetFromBottom + (targetRect.height / 2);
+       mandateCenterY = window.innerHeight - targetCenterFromBottom;
+    } else {
+       // Desktop: Pin is at center center+=50
+       const sectionCenterY = mandateSectionRect.top + (mandateSectionRect.height / 2);
+       const targetCenterY_initial = targetRect.top + (targetRect.height / 2);
+       const offsetFromSectionCenter = targetCenterY_initial - sectionCenterY;
+       const pinPointY = (window.innerHeight / 2) + 50;
+       
+       mandateCenterY = pinPointY + offsetFromSectionCenter;
+       mandateCenterX = targetRect.left + (targetRect.width / 2);
+    }
+    
+    const mandateScaleFactor = isMobile ? 0.35 : 0.85;
+
+    // Apply Phase 1 Animation
     sourcePaths.forEach((path, i) => {
       const d = targetDotsData[i % targetDotsData.length];
-      
       const dotRect = path.getBoundingClientRect();
-      const dotCurrentX = dotRect.left + (dotRect.width / 2);
-      const dotCurrentY = dotRect.top + (dotRect.height / 2);
+      const dotOriginX = dotRect.left + (dotRect.width / 2);
+      const dotOriginY = dotRect.top + (dotRect.height / 2);
 
-      const offsetX = (d.x - dataCenterX) * scaleFactor;
-      const offsetY = (d.y - dataCenterY) * scaleFactor;
-
-      const finalX = destCenterX + offsetX;
-      const finalY = destCenterY + offsetY;
+      const offsetX = (d.x - dataCenterX) * mandateScaleFactor;
+      const offsetY = (d.y - dataCenterY) * mandateScaleFactor;
 
       moveTl.to(path, {
-        x: finalX - dotCurrentX,
-        y: finalY - dotCurrentY,
-        scale: (d.r / baseSourceRadius) * scaleFactor,
+        x: (mandateCenterX + offsetX) - dotOriginX,
+        y: (mandateCenterY + offsetY) - dotOriginY,
+        scale: (d.r / baseSourceRadius) * mandateScaleFactor,
         fill: d.color,
         filter: d.blurLevel > 0 ? "blur(4px)" : "none",
         opacity: 1,
         ease: "none", 
-        duration: 1
+        duration: 1,
+        immediateRender: false 
       }, 0);
     });
 
-    // 4. EXIT SETUP (Mobile Only)
-    if (isMobile && fixedContainer) {
-      gsap.to(fixedContainer, {
-        y: -window.innerHeight * 1.5,
+    // ======================================
+    // PHASE 2: MANDATE -> COMPLIANCE
+    // ======================================
+    
+    // Calculate Compliance Center
+    const complianceSection = document.querySelector("#compliance-section");
+    const complianceSectionRect = complianceSection.getBoundingClientRect();
+    const circleRect = complianceCircle.getBoundingClientRect();
+    
+    const circleOffsetY = (circleRect.top + circleRect.height/2) - complianceSectionRect.top;
+    const circleOffsetX = (circleRect.left + circleRect.width/2) - complianceSectionRect.left;
+
+    // Target Viewport Coordinates
+    const circleCenterX = complianceSectionRect.left + circleOffsetX; 
+    const circleCenterY = circleOffsetY;
+    
+    const complianceGatherScale = 0.3; 
+
+    // Transition Timeline: Move dots to Compliance Circle center
+    const transitionTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#compliance-section",
+        start: "top bottom",
+        end: "top top",
+        scrub: 1
+      }
+    });
+
+    sourcePaths.forEach((path, i) => {
+      const d = targetDotsData[i % targetDotsData.length];
+      const dotRect = path.getBoundingClientRect();
+      const dotOriginX = dotRect.left + (dotRect.width / 2);
+      const dotOriginY = dotRect.top + (dotRect.height / 2);
+
+      const offsetX = (d.x - dataCenterX) * complianceGatherScale;
+      const offsetY = (d.y - dataCenterY) * complianceGatherScale;
+
+      transitionTl.to(path, {
+        // x: (circleCenterX + offsetX) - dotOriginX,
+        // y: (circleCenterY + offsetY) - dotOriginY,
+        x:0,
+        y:0,
+        scale: (d.r / baseSourceRadius) * complianceGatherScale,
+        duration: 1,
         ease: "none",
-        scrollTrigger: {
-          trigger: "body",
-          start: () => pinTrigger.end, 
-          end: "+=1000",
-          scrub: 0
-        }
-      });
-    }
+        immediateRender: false
+      }, 0);
+    });
+
+    // Pin the compliance section and animate sequence
+    const complianceTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#compliance-section",
+        start: "top top",
+        end: "+=3000",
+        pin: true,
+        scrub: 1,
+        anticipatePin: 1
+      }
+    });
+
+    // STEP 1: Fade out all dots (0-0.5)
+    complianceTl.to(sourcePaths, {
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.out"
+    }, 0);
+
+    // STEP 2: Fill circle from center using clip-path for clean expansion
+    complianceTl.fromTo(complianceCircle, {
+      backgroundColor: "#606060",
+      clipPath: "circle(0% at center)"
+    }, {
+      backgroundColor: "#142D21",
+      clipPath: "circle(100% at center)",
+      duration: 1.8,
+      ease: "power2.inOut"
+    }, -0.3);
+
+    // STEP 2.5: Apply inset shadow after circle is formed
+    complianceTl.to(complianceCircle, {
+      boxShadow: "inset 10px 20px 40px 0 rgba(0, 0, 0, 0.7)",
+      duration: 0.3,
+      ease: "power2.out"
+    }, 1.5); // Starts near the end of circle fill
+
+    // STEP 3: Fade in content elements (duration 2-3 of timeline)
+    const contentElements = [
+      "#compliance-heading",
+      "#compliance-li-1",
+      "#compliance-li-2",
+      "#compliance-li-3",
+      "#compliance-text-1",
+      "#compliance-text-2",
+      "#compliance-link"
+    ];
+
+    complianceTl.to(contentElements, {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+      stagger: 0.15,
+      ease: "power2.out"
+    }, 2);
   }
 
+  // Init
   window.addEventListener("load", initAnimation);
   let resizeTimer;
   window.addEventListener("resize", () => {
